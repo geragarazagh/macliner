@@ -1,0 +1,30 @@
+{
+  "name": "mac-clean",
+  "version": "0.1.1",
+  "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.",
+  "author": {
+    "name": "Herman Harazha",
+    "url": "https://geragaraza.com"
+  },
+  "homepage": "https://github.com/geragarazagh/mac-clean",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Mac Clean",
+    "shortDescription": "Clean, update, check a Mac",
+    "longDescription": "Ask the assistant to clean up the Mac and it measures first: caches, logs, the Trash, old downloads, leftovers of removed apps, duplicates, apps not opened for months, updates, security settings and the battery and disk. It shows the plan with sizes, deletes at once only what comes back by itself, asks before anything a person might want, and checks again at the end. It uses macOS's own commands, sends nothing anywhere and leaves nothing running.",
+    "developerName": "Herman Harazha",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/geragarazagh/mac-clean",
+    "supportURL": "https://github.com/geragarazagh/mac-clean/issues",
+    "privacyPolicyURL": "https://geragaraza.com/skills/privacy/",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": [
+      "Clean up my Mac and update everything.",
+      "How much space can I free on this Mac?",
+      "Check my Mac's security settings and battery."
+    ]
+  }
+}
