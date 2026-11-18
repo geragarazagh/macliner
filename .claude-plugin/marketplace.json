@@ -1,13 +1,13 @@
 {
-  "name": "mac-clean",
-  "description": "The mac-clean skill: clean, update and check a Mac in one run.",
+  "name": "macliner",
+  "description": "The macliner skill: clean, update and check a Mac in one run.",
   "owner": {
     "name": "Herman Harazha",
     "url": "https://geragaraza.com"
   },
   "plugins": [
     {
-      "name": "mac-clean",
+      "name": "macliner",
       "source": "./",
       "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want."
     }

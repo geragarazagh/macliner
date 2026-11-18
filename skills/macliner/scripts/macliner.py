@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-"""macclean.py - measure a Mac, plan its cleaning, updates and checks, then do exactly the plan.
+"""macliner.py - measure a Mac, plan its cleaning, updates and checks, then do exactly the plan.
 
-  macclean.py plan [--json FILE]        read-only: what would go (with sizes), what needs a choice, what is
+  macliner.py plan [--json FILE]        read-only: what would go (with sizes), what needs a choice, what is
                                         out of date, what is wrong, what is never touched; saves the plan
-  macclean.py apply [FILE]              does every «auto» line of the saved plan
-  macclean.py apply [FILE] --only ID …  does only the named lines («ask», «update», «setting» or «auto»)
-  macclean.py remember --yes ID … --no ID … --protect PATH …
-                                        keeps standing answers in ~/.config/mac-clean/answers.json
+  macliner.py apply [FILE]              does every «auto» line of the saved plan
+  macliner.py apply [FILE] --only ID …  does only the named lines («ask», «update», «setting» or «auto»)
+  macliner.py remember --yes ID … --no ID … --protect PATH …
+                                        keeps standing answers in ~/.config/macliner/answers.json
 
-The plan is saved to FILE, by default mac-clean-plan.json in the system's temporary folder, and «apply»
+The plan is saved to FILE, by default macliner-plan.json in the system's temporary folder, and «apply»
 reads the same file. A plan older than 3 hours or from another Mac is refused: make a new one.
 Deletes for real (no Trash). Every path is checked again against the never-touch list before it goes.
 Never asks for a password: lines that need an administrator are printed as commands for the person.
@@ -34,8 +34,11 @@ HOME = os.path.expanduser("~")
 H = lambda p: os.path.join(HOME, p)
 ENV = dict(os.environ, PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:" + os.environ.get("PATH", ""),
            HOMEBREW_NO_AUTO_UPDATE="1", HOMEBREW_NO_ENV_HINTS="1", HOMEBREW_NO_ASK="1", NO_COLOR="1", TERM="dumb")
-DEFAULT_PLAN = os.path.join(tempfile.gettempdir(), "mac-clean-plan.json")
-ANSWERS = H(".config/mac-clean/answers.json")
+DEFAULT_PLAN = os.path.join(tempfile.gettempdir(), "macliner-plan.json")
+ANSWERS = H(".config/macliner/answers.json")
+# Until 0.2.0 (2026-11-18) the skill was named mac-clean and kept its answers here: read once if the new file is
+# missing; «remember» then writes the new one.
+OLD_ANSWERS = H(".config/mac-clean/answers.json")
 
 # Never deleted, whatever a line of the plan says. Globs, matched against the real path and every parent.
 # The person's own files and libraries (cannot be recreated), credentials, cloud folders, assistants' own data,
@@ -57,7 +60,7 @@ PROTECTED = [
     "/Applications/Xcode*.app", "/Library/Developer",
     H(".ollama"), H(".lmstudio"), H(".cache/lm-studio"), H(".cache/huggingface"), H(".cache/torch"), H(".cache/whisper"),
     H("Library/Caches/ms-playwright*"), H("Library/Caches/Cypress"), H("Library/Caches/camoufox"), H(".cache/puppeteer"),
-    H("Library/Caches/mac-clean"),
+    H("Library/Caches/macliner"),
     "/Volumes/*/*",                                                 # files on other disks (their Trash: own line)
     "/System", "/usr", "/bin", "/sbin", "/private/var/db",
 ]
@@ -95,7 +98,7 @@ def have(tool):
 
 def load_answers():
     try:
-        with open(ANSWERS) as f:
+        with open(ANSWERS if os.path.exists(ANSWERS) or not os.path.exists(OLD_ANSWERS) else OLD_ANSWERS) as f:
             a = json.load(f)
         return a if isinstance(a, dict) else {}
     except (OSError, ValueError):
@@ -200,7 +203,7 @@ def full_disk_access():
     return False
 
 
-FDA = full_disk_access() and not os.environ.get("MACCLEAN_TEST_NO_FDA")
+FDA = full_disk_access() and not os.environ.get("MACLINER_TEST_NO_FDA")
 
 
 def running_apps():
@@ -768,7 +771,7 @@ ORDER = [("auto", "Done without asking"), ("ask", "Needs the person's choice"), 
 
 
 def print_plan(plan):
-    out = ["mac-clean plan  %s  %s  macOS %s  free %s  (%d s, nothing changed)" % (
+    out = ["macliner plan  %s  %s  macOS %s  free %s  (%d s, nothing changed)" % (
         plan["date"], plan["host"], plan["macos"], human(plan["free"]), plan["seconds"])]
     for cls, title in ORDER:
         items = [i for i in plan["items"] if i["cls"] == cls]
@@ -855,11 +858,11 @@ def apply(path, only):
         with open(path) as f:
             plan = json.load(f)
     except (OSError, ValueError):
-        print("no plan at %s: run «macclean.py plan» first" % path)
+        print("no plan at %s: run «macliner.py plan» first" % path)
         return 2
     age = time.time() - time.mktime(time.strptime(plan["date"], "%Y-%m-%d %H:%M"))
     if age > 3 * 3600 or plan["host"] != socket.gethostname():
-        print("the plan is older than 3 hours or from another Mac: run «macclean.py plan» again")
+        print("the plan is older than 3 hours or from another Mac: run «macliner.py plan» again")
         return 2
     ids = {i["id"] for i in plan["items"]}
     unknown = [x for x in only if x not in ids]
@@ -984,7 +987,7 @@ def apply(path, only):
         print("  needs an administrator; the person can paste these into Terminal:")
         for c in need_admin:
             print("    " + c)
-    print("verify: run «macclean.py plan» again; every line done must be gone from it")
+    print("verify: run «macliner.py plan» again; every line done must be gone from it")
     return 1 if failed else 0
 
 
@@ -1003,10 +1006,10 @@ def remember(argv):
             if other and v in a.get(other, []):
                 a[other].remove(v)
         else:
-            print("usage: macclean.py remember --yes ID ... --no ID ... --protect PATH ...", file=sys.stderr)
+            print("usage: macliner.py remember --yes ID ... --no ID ... --protect PATH ...", file=sys.stderr)
             return 64
     os.makedirs(os.path.dirname(ANSWERS), exist_ok=True)
-    a["_about"] = ("Standing answers of the mac-clean skill: «yes» ids are done without asking, «no» ids are left, "
+    a["_about"] = ("Standing answers of the macliner skill: «yes» ids are done without asking, «no» ids are left, "
                    "«protect» paths are never deleted. Edit or delete this file at will.")
     with open(ANSWERS, "w") as f:
         json.dump(a, f, ensure_ascii=False, indent=1)
@@ -1041,7 +1044,7 @@ def main(argv):
         return apply(os.path.abspath(rest[0]) if rest else DEFAULT_PLAN, only)
     if argv[0] == "remember":
         return remember(argv[1:])
-    print("usage: macclean.py plan [--json FILE] | apply [FILE] [--only ID ...] | remember ... (--help)", file=sys.stderr)
+    print("usage: macliner.py plan [--json FILE] | apply [FILE] [--only ID ...] | remember ... (--help)", file=sys.stderr)
     return 64
 
 
