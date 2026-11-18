@@ -96,6 +96,8 @@ Until 0.2.0 (2026-11-18) the skill was named `mac-clean`, in the repository gera
 
 Then in a test virtual machine (macOS 27.2, a fresh user account, no Homebrew), with caches, logs, a Trash item, developer caches, an installer, a duplicate pair, an old download and a Desktop file planted: `plan`, `apply`, `apply --only` with the choices, `plan` again. The freed sizes reported by the script matched the sizes measured before deleting, the Desktop files and the duplicate's original kept the same checksums, no password was asked, no line failed, and the second plan listed nothing left to clean.
 
+Version 0.2.0 renames the skill from `mac-clean` to `macliner` and sets the catalogue icons; what the skill does is unchanged. On 2026-11-18 the installs were run again under the new name from this repository's v0.2.0 release, each into an empty home folder: `npx skills add geragarazagh/macliner -g` (files identical to `skills/macliner`), the Claude Code plugin commands above in Claude Code 2.1.326 (the plugin's skill folder identical), and `gemini extensions install` in Gemini CLI 0.68.0 (installed from the release, version 0.2.0, the skill folder identical). `macliner.py plan` was run again read-only on the same Mac (23 s).
+
 Not tested: a run by a model, other agents, `apply` on a Mac in daily use, Intel Macs and older macOS versions, a Mac really without Full Disk Access, the installs marked **docs**.
 
 ## What it cannot do
