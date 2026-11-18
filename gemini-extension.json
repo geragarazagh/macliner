@@ -1,5 +1,5 @@
 {
   "name": "macliner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify."
 }
