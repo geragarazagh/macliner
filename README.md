@@ -1,6 +1,6 @@
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icon-github-dark.png"><img src="assets/icon-github.png" width="128" alt="mac-clean icon: the delete key sign, a key pointing left with a cross inside"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icon-github-dark.png"><img src="assets/icon-github.png" width="128" alt="macliner icon: the delete key sign, a key pointing left with a cross inside"></picture>
 
-# mac-clean: a skill for AI assistants that cleans, updates and checks a Mac
+# macliner: a skill for AI assistants that cleans, updates and checks a Mac
 
 A free, open source agent skill for macOS. Ask the assistant to «clean up my Mac» («free some space», «update everything», «is my Mac secure?») and it measures the Mac first, shows a plan with sizes, deletes at once only what comes back by itself, asks before anything a person might want, installs the updates it was asked for, and measures again to check that everything planned was done.
 
@@ -11,7 +11,7 @@ A free, open source agent skill for macOS. Ask the assistant to «clean up my Ma
 - **Settings** that trade comfort for safety or privacy (firewall, stealth mode, AirPlay Receiver, Mac Analytics, automatic macOS updates, File Sharing, Remote Login) are named with their state and trade-off and changed only when the person asks. The baseline is how macOS ships.
 - **Never touched**: Desktop, Documents, iCloud Drive and other cloud folders, the Photos, Music, TV, iMovie and Final Cut libraries, Mail, Messages, keychains, iPhone backups, SSH and GPG keys, tool settings in `~/.config` and `~/.local`, the folders of AI assistants and coding agents, virtual machines, Xcode simulators and archives, downloaded AI models, files on other disks. The helper script checks every path against this list again just before deleting it.
 
-Works in assistants that run commands on the Mac itself: terminal agents such as Claude Code, Codex, Gemini CLI and Antigravity, OpenCode, OpenClaw, Hermes and others. Chat apps cannot reach the Mac and cannot use it. One file, `SKILL.md`, carries the method; the helper script `scripts/macclean.py` (Python 3 standard library, about 1,000 lines) does the measuring and deleting, so that the plan and the deletion are the same list.
+Works in assistants that run commands on the Mac itself: terminal agents such as Claude Code, Codex, Gemini CLI and Antigravity, OpenCode, OpenClaw, Hermes and others. Chat apps cannot reach the Mac and cannot use it. One file, `SKILL.md`, carries the method; the helper script `scripts/macliner.py` (Python 3 standard library, about 1,000 lines) does the measuring and deleting, so that the plan and the deletion are the same list.
 
 ## Install
 
@@ -26,29 +26,29 @@ Python 3 from Apple's command line tools (`xcode-select --install`; a Mac with H
 One command for every agent found on the computer (needs Node.js; `-g` installs for the user, without it for the current project only), **run** (2026-11-18, from this repository on GitHub into an empty home folder; the files installed identical to the repository):
 
 ```sh
-npx skills add geragarazagh/mac-clean -g
+npx skills add geragarazagh/macliner -g
 ```
 
-It puts the skill into `~/.agents/skills/mac-clean`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
+It puts the skill into `~/.agents/skills/macliner`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
 Claude Code, as a plugin, **run** (2026-11-18, from this repository on GitHub: the marketplace added, the plugin installed, its `skills` folder identical to the repository):
 
 ```sh
-claude plugin marketplace add geragarazagh/mac-clean
-claude plugin install mac-clean@mac-clean
+claude plugin marketplace add geragarazagh/macliner
+claude plugin install macliner@macliner
 ```
 
 Gemini CLI, as an extension, **run** (2026-11-18, from this repository's latest release on GitHub, Gemini CLI 0.68.0, into an empty home folder: the extension installed and its skill listed by `gemini skills list`):
 
 ```sh
-gemini extensions install https://github.com/geragarazagh/mac-clean
+gemini extensions install https://github.com/geragarazagh/macliner
 ```
 
-By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build), **docs**: copy `skills/mac-clean` to `~/.agents/skills/mac-clean`. Claude Code reads `~/.claude/skills/mac-clean`; Antigravity reads `~/.gemini/config/skills/mac-clean`.
+By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build), **docs**: copy `skills/macliner` to `~/.agents/skills/macliner`. Claude Code reads `~/.claude/skills/macliner`; Antigravity reads `~/.gemini/config/skills/macliner`.
 
 ### No skills in the agent
 
-Paste the text of [`SKILL.md`](skills/mac-clean/SKILL.md) into the agent's instructions (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` or the agent's settings), or as the first message of a session. Without the script the assistant follows the shorter route by hand in the same text: measure, show the plan, delete only the listed paths, measure again.
+Paste the text of [`SKILL.md`](skills/macliner/SKILL.md) into the agent's instructions (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` or the agent's settings), or as the first message of a session. Without the script the assistant follows the shorter route by hand in the same text: measure, show the plan, delete only the listed paths, measure again.
 
 ### Full Disk Access
 
@@ -56,7 +56,7 @@ macOS hides Downloads, the Trash, Safari's data and the apps' own containers fro
 
 ## Use
 
-Say what is wanted, in any language. To call the skill by name: `/mac-clean` in Claude Code (`/mac-clean:mac-clean` when installed as the plugin) and Antigravity; `$mac-clean` in Codex.
+Say what is wanted, in any language. To call the skill by name: `/macliner` in Claude Code (`/macliner:macliner` when installed as the plugin) and Antigravity; `$macliner` in Codex.
 
 ```
 Clean up my Mac and update everything.
@@ -68,17 +68,17 @@ Remove the apps I haven't opened in months.
 A run: the plan (30 seconds to 3 minutes, read-only), the lines that need no choice, one message with the choices and their sizes, the lines the person said yes to, the plan again to verify, a short report with the space freed. The helper script can also be run by hand:
 
 ```sh
-/usr/bin/python3 skills/mac-clean/scripts/macclean.py plan
-/usr/bin/python3 skills/mac-clean/scripts/macclean.py apply
-/usr/bin/python3 skills/mac-clean/scripts/macclean.py apply --only dev-caches 'app:Some App.app'
+/usr/bin/python3 skills/macliner/scripts/macliner.py plan
+/usr/bin/python3 skills/macliner/scripts/macliner.py apply
+/usr/bin/python3 skills/macliner/scripts/macliner.py apply --only dev-caches 'app:Some App.app'
 ```
 
-Standing answers («always clear developer caches», «never ask about Safari», «never delete this folder») are kept, on request, in `~/.config/mac-clean/answers.json`.
+Standing answers («always clear developer caches», «never ask about Safari», «never delete this folder») are kept, on request, in `~/.config/macliner/answers.json`.
 
 ## What this skill does on the computer
 
 - Runs macOS's own commands (`du`, `find`, `mdls`, `mdfind`, `lsappinfo`, `system_profiler`, `diskutil`, `pmset`, `csrutil`, `spctl`, `fdesetup`, `xprotect`, `netstat`, `sharing`, `softwareupdate --list`, `defaults read`, `codesign -v`, `xcrun simctl`), and Homebrew and mas when installed, through the helper script (read it first: one file, standard library only).
-- Reads sizes in the home folder and its Library, the Trash and the start-up item folders, and looks for files over 1 GB outside Library and the never-touched folders. Hashes files of 1 MB and more of equal size to find duplicates. Writes the plan to a file in the system's temporary folder, and `~/.config/mac-clean/answers.json` only when asked.
+- Reads sizes in the home folder and its Library, the Trash and the start-up item folders, and looks for files over 1 GB outside Library and the never-touched folders. Hashes files of 1 MB and more of equal size to find duplicates. Writes the plan to a file in the system's temporary folder, and `~/.config/macliner/answers.json` only when asked.
 - Deletes for real (no Trash), only the paths of plan lines that need no choice or that the person said yes to, each checked again against the never-touched list.
 - Installs Homebrew and App Store updates only when the person asked for updates. Never installs macOS updates, never restarts the Mac, never changes a setting the person did not ask to change.
 - Never asks for or types a password and never runs `sudo` without a password the system already holds; what needs an administrator is printed as commands for the person.
@@ -86,6 +86,8 @@ Standing answers («always clear developer caches», «never ask about Safari»,
 - The installers are other people's programs with their own rules: `npx skills` (Vercel) sends an anonymous install count unless `DISABLE_TELEMETRY=1` is set.
 
 ## Tested on
+
+Until 0.2.0 (2026-11-18) the skill was named `mac-clean`, in the repository geragarazagh/mac-clean, which GitHub now redirects here; the runs below used that name.
 
 2026-11-18, by hand on an Apple M3 Pro MacBook Pro with macOS 27.2.1, Apple's Python 3.9.6, Homebrew 7.0.14 and mas 7.0.0:
 

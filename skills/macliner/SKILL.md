@@ -1,15 +1,15 @@
 ---
-name: mac-clean
+name: macliner
 description: "Cleans, updates and checks a Mac in one run: measures, shows a plan with sizes, deletes caches and leftovers for real, asks before anything a person might want, then verifies. Use when someone asks to clean up, free space on, speed up, update or check the security of their Mac."
 license: MIT
 compatibility: "macOS only. Needs an assistant that runs commands on the Mac itself (a terminal agent) and Python 3 from Apple's command line tools. Uses Homebrew and mas when they are installed. Not for chat apps: they cannot reach the Mac."
 ---
 
-# mac-clean
+# Macliner
 
 Cleans, updates and checks a Mac in one run, the way paid cleaner apps do, with
 the Mac's own commands and nothing that stays running afterwards. The helper
-script `scripts/macclean.py` does the measuring and the deleting; it needs only
+script `scripts/macliner.py` does the measuring and the deleting; it needs only
 Python 3 (standard library) and macOS's own commands.
 
 Answer in the language of the person's message, briefly. A request such as
@@ -38,7 +38,7 @@ The script lives in this skill's folder (next to this file), not in the
 person's folder: call it by its full path. If that path is not known, find it:
 
 ```
-find -L ~/.[a-z]* -maxdepth 9 -path '*mac-clean/scripts/macclean.py' 2>/dev/null | head -1
+find -L ~/.[a-z]* -maxdepth 9 -path '*macliner/scripts/macliner.py' 2>/dev/null | head -1
 ```
 
 Below, SCRIPT means that full path. Run it with `/usr/bin/python3` (Apple's
@@ -180,7 +180,7 @@ If the person wants the same answers next time, offer to keep them:
 `--yes` choices and updates are then done without asking, `--no` lines are
 left, and `--protect` paths are never deleted. Settings cannot be given a
 standing yes. The file is
-`~/.config/mac-clean/answers.json`; say where it is. Ids of apps, duplicates
+`~/.config/macliner/answers.json`; say where it is. Ids of apps, duplicates
 and files are tied to that item, so remember only answers the person meant to
 keep («never ask about Safari again»).
 
