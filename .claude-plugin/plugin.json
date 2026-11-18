@@ -1,0 +1,25 @@
+{
+  "name": "mac-clean",
+  "displayName": "Mac Clean",
+  "version": "0.1.0",
+  "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.",
+  "author": {
+    "name": "Herman Harazha",
+    "url": "https://geragaraza.com"
+  },
+  "homepage": "https://github.com/geragarazagh/mac-clean",
+  "repository": "https://github.com/geragarazagh/mac-clean",
+  "license": "MIT",
+  "keywords": [
+    "macos",
+    "mac-cleaner",
+    "disk-space",
+    "cache",
+    "uninstaller",
+    "homebrew",
+    "security-check",
+    "agent-skills"
+  ],
+  "supportUrl": "https://github.com/geragarazagh/mac-clean/issues",
+  "privacyPolicyUrl": "https://geragaraza.com/skills/privacy/"
+}
