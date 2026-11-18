@@ -23,7 +23,7 @@ Python 3 from Apple's command line tools (`xcode-select --install`; a Mac with H
 
 ### Terminal agents
 
-One command for every agent found on the computer (needs Node.js; `-g` installs for the user, without it for the current project only), **docs**:
+One command for every agent found on the computer (needs Node.js; `-g` installs for the user, without it for the current project only), **run** (2026-11-18, from this repository on GitHub into an empty home folder; the files installed identical to the repository):
 
 ```sh
 npx skills add geragarazagh/mac-clean -g
@@ -31,7 +31,7 @@ npx skills add geragarazagh/mac-clean -g
 
 It puts the skill into `~/.agents/skills/mac-clean`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
-Claude Code, as a plugin, **docs**:
+Claude Code, as a plugin, **run** (2026-11-18, from this repository on GitHub: the marketplace added, the plugin installed, its `skills` folder identical to the repository):
 
 ```sh
 claude plugin marketplace add geragarazagh/mac-clean
