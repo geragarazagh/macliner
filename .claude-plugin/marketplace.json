@@ -1,6 +1,6 @@
 {
   "name": "macliner",
-  "description": "The macliner skill: clean, update and check a Mac in one run.",
+  "description": "Cleans, updates and checks a Mac.",
   "owner": {
     "name": "Herman Harazha",
     "url": "https://geragaraza.com"
@@ -9,7 +9,7 @@
     {
       "name": "macliner",
       "source": "./",
-      "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want."
+      "description": "Cleans, updates and checks a Mac."
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "name": "macliner",
   "displayName": "Macliner",
-  "version": "0.2.1",
-  "description": "Cleans, updates and checks a Mac in one run: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.",
+  "version": "0.2.2",
+  "description": "Cleans, updates and checks a Mac.",
   "author": {
     "name": "Herman Harazha",
     "url": "https://geragaraza.com"
@@ -10,17 +10,6 @@
   "homepage": "https://github.com/geragarazagh/macliner",
   "repository": "https://github.com/geragarazagh/macliner",
   "license": "MIT",
-  "keywords": [
-    "macliner",
-    "macos",
-    "mac-cleaner",
-    "disk-space",
-    "cache",
-    "uninstaller",
-    "homebrew",
-    "security-check",
-    "agent-skills"
-  ],
   "supportUrl": "https://github.com/geragarazagh/macliner/issues",
   "privacyPolicyUrl": "https://geragaraza.com/skills/privacy/",
   "icon": "./.claude-plugin/icon.png"
